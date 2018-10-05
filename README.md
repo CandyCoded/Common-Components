@@ -4,6 +4,8 @@
 
 - BillboardTowardsCamera
 - Gizmo
+- Logger
+- RigidbodyMonoBehaviour
 - ScreenShake
 - SelfDestructParticleSystem
 

@@ -34,3 +34,14 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Custom
+
+.scannerwork/
+.vscode/
+
+Packages/
+ProjectSettings/
+
+*.log
+*.xml

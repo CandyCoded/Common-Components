@@ -40,6 +40,8 @@ sysinfo.txt
 .scannerwork/
 .vscode/
 
+/*.meta
+
 Packages/
 ProjectSettings/
 

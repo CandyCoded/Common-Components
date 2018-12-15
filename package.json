@@ -1,0 +1,10 @@
+{
+    "name": "com.candycoded.common-components",
+    "displayName": "Common-Components",
+    "version": "1.0.0",
+    "unity": "2018.3",
+    "description": "Common components for use with CandyCoded",
+    "keywords": [
+        "components"
+    ]
+}

@@ -5,4 +5,4 @@ clean:
 	rm -f unity.log
 
 deploy:
-	git subtree push --prefix Assets/Plugins/Common-Components/ origin upm
+	git subtree push --prefix Assets/Plugins/Common-Components origin upm

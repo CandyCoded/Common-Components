@@ -5,7 +5,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-namespace CandyCoded
+namespace CandyCoded.CommonComponents
 {
 
     public class Gizmo : MonoBehaviour

@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace CandyCoded
+namespace CandyCoded.CommonComponents
 {
 
     public abstract class RigidbodyMonoBehaviour : MonoBehaviour

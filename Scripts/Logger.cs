@@ -3,7 +3,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace CandyCoded
+namespace CandyCoded.CommonComponents
 {
 
     public class Logger : MonoBehaviour

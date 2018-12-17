@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace CandyCoded
+namespace CandyCoded.CommonComponents
 {
 
     public class SelfDestructParticleSystem : MonoBehaviour

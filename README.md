@@ -22,23 +22,3 @@
     }
 }
 ```
-
-### Git Submodule
-
-#### Install
-
-```bash
-$ git submodule add git@github.com:CandyCoded/Common-Components.git Assets/Plugins/Common-Components/
-```
-
-After cloning repo with submodule already installed
-
-```bash
-$ git submodule init && git submodule update --remote
-```
-
-#### Update
-
-```bash
-$ git submodule update --remote
-```

@@ -2,6 +2,7 @@
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace CandyCoded.CommonComponents
 {
@@ -57,12 +58,12 @@ namespace CandyCoded.CommonComponents
 
         private IEnumerator SendDataToLumberLog(WWWForm form)
         {
-            using (WWW www = new WWW(url, form))
+            using (UnityWebRequest www = UnityWebRequest.Post(url, form))
             {
 
-                yield return www;
+                yield return www.SendWebRequest();
 
-                if (!string.IsNullOrEmpty(www.error))
+                if (www.isNetworkError || www.isHttpError)
                 {
 
                     Debug.LogError(www.error);

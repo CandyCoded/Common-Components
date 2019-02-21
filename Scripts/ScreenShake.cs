@@ -15,8 +15,8 @@ namespace CandyCoded.CommonComponents
     public class ScreenShake : MonoBehaviour
     {
 
-        const float DEFAULT_SCREENSHAKE_DURATION = 0.5f;
-        const float DEFAULT_SCREENSHAKE_INTENSITY = 0.2f;
+        private const float DEFAULT_SCREENSHAKE_DURATION = 0.5f;
+        private const float DEFAULT_SCREENSHAKE_INTENSITY = 0.2f;
 
         private float currentIntensity;
         private float currentDuration;

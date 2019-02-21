@@ -9,8 +9,10 @@ namespace CandyCoded.CommonComponents
     public class Logger : MonoBehaviour
     {
 
+#pragma warning disable CS0649
         [SerializeField]
         private string url;
+#pragma warning restore CS0649
 
         private int failedConnections;
 

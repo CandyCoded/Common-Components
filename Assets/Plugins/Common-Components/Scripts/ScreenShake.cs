@@ -7,18 +7,24 @@ namespace CandyCoded.CommonComponents
 
     public enum ScreenshakeDirections
     {
+
         All,
+
         Horizontal,
+
         Vertical
+
     }
 
     public class ScreenShake : MonoBehaviour
     {
 
         private const float DEFAULT_SCREENSHAKE_DURATION = 0.5f;
+
         private const float DEFAULT_SCREENSHAKE_INTENSITY = 0.2f;
 
         private float currentIntensity;
+
         private float currentDuration;
 
         private ScreenshakeDirections currentDirection = ScreenshakeDirections.All;
@@ -26,6 +32,7 @@ namespace CandyCoded.CommonComponents
         private GameObject wrapperObject;
 
 #pragma warning disable S1144
+
         // Disables "Unused private types or members should be removed" warning as method is part of MonoBehaviour.
         private void Awake()
         {
@@ -39,26 +46,30 @@ namespace CandyCoded.CommonComponents
         private void Update()
         {
 
-            Vector3 shakePosition = Vector3.zero;
+            var shakePosition = Vector3.zero;
 
             if (currentDuration > 0)
             {
 
 #pragma warning disable S131, IDE0010
+
                 // Disables "Add missing case" warning as value can only be one of three enum values.
                 switch (currentDirection)
                 {
 
                     case ScreenshakeDirections.All:
                         shakePosition = Random.insideUnitCircle * currentIntensity;
+
                         break;
 
                     case ScreenshakeDirections.Horizontal:
                         shakePosition = new Vector3(Random.Range(-1, 1), 0, 0) * currentIntensity;
+
                         break;
 
                     case ScreenshakeDirections.Vertical:
                         shakePosition = new Vector3(0, Random.Range(-1, 1), 0) * currentIntensity;
+
                         break;
 
                 }

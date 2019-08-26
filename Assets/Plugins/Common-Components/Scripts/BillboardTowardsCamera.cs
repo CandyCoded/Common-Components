@@ -12,6 +12,7 @@ namespace CandyCoded.CommonComponents
         private Transform mainCamera;
 
 #pragma warning disable S1144
+
         // Disables "Unused private types or members should be removed" warning as method is part of MonoBehaviour.
         private void Awake()
         {

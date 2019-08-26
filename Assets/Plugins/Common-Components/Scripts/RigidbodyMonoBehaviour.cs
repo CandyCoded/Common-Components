@@ -5,40 +5,51 @@ using UnityEngine;
 namespace CandyCoded.CommonComponents
 {
 
+    [RequireComponent(typeof(Rigidbody))]
     public abstract class RigidbodyMonoBehaviour : MonoBehaviour
     {
 
-        protected Rigidbody rb;
+        private Rigidbody _rb;
 
-        private bool sleepingState;
+        protected Rigidbody rb {
 
-        protected virtual void Awake()
-        {
+            get {
 
-            rb = gameObject.GetComponent<Rigidbody>();
+                if (_rb == null)
+                {
+
+                    _rb = gameObject.GetComponent<Rigidbody>();
+
+                }
+
+                return _rb;
+
+            }
 
         }
+
+        private bool sleepingState;
 
         private void OnCollisionStay()
         {
 
-            if (rb != null && rb.IsSleeping() != sleepingState)
+            if (rb == null || rb.IsSleeping() == sleepingState)
+            {
+                return;
+            }
+
+            sleepingState = rb.IsSleeping();
+
+            if (sleepingState)
             {
 
-                sleepingState = rb.IsSleeping();
+                OnCollisionSleep();
 
-                if (sleepingState)
-                {
+            }
+            else
+            {
 
-                    OnCollisionSleep();
-
-                }
-                else
-                {
-
-                    OnCollisionAwake();
-
-                }
+                OnCollisionAwake();
 
             }
 

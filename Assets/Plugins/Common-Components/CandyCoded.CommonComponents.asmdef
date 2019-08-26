@@ -1,12 +1,14 @@
 {
     "name": "CandyCoded.CommonComponents",
-    "references": [],
-    "optionalUnityReferences": [],
+    "references": [
+        "CandyCoded"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }

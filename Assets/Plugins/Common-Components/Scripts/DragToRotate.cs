@@ -79,7 +79,7 @@ namespace CandyCoded.CommonComponents
 
                 }
 
-                gameObject.transform.RotateWithDelta(inputPreviousPosition.Value - currentInputPosition.Value,
+                gameObject.transform.RotateWithDelta(mainCamera.ScreenToHighPrecisionViewportPoint(inputPreviousPosition.Value) - mainCamera.ScreenToHighPrecisionViewportPoint(currentInputPosition.Value),
                     _rotateSpeed,
                     mainCameraTransform, _rotationAxis);
 

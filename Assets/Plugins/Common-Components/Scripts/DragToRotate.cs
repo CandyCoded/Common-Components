@@ -15,6 +15,9 @@ namespace CandyCoded.CommonComponents
         [SerializeField]
         private float _rotateSpeed = 100f;
 
+        [SerializeField]
+        private float _rotationGravity = 5f;
+
 #pragma warning disable CS0649
         [SerializeField]
         private ROTATION_AXIS _rotationAxis;
@@ -31,6 +34,8 @@ namespace CandyCoded.CommonComponents
         private int currentFingerId;
 
         private Vector3? inputPreviousPosition;
+
+        private Vector3? delta;
 
         private void Awake()
         {
@@ -64,8 +69,6 @@ namespace CandyCoded.CommonComponents
 
                 inputPreviousPosition = null;
 
-                RotationEnded?.Invoke();
-
             }
             else if (inputPreviousPosition.HasValue)
             {
@@ -79,11 +82,33 @@ namespace CandyCoded.CommonComponents
 
                 }
 
-                gameObject.transform.RotateWithDelta(mainCamera.ScreenToHighPrecisionViewportPoint(inputPreviousPosition.Value) - mainCamera.ScreenToHighPrecisionViewportPoint(currentInputPosition.Value),
+                delta = mainCamera.ScreenToHighPrecisionViewportPoint(inputPreviousPosition.Value) -
+                        mainCamera.ScreenToHighPrecisionViewportPoint(currentInputPosition.Value);
+
+                gameObject.transform.RotateWithDelta(delta.Value,
                     _rotateSpeed,
                     mainCameraTransform, _rotationAxis);
 
                 inputPreviousPosition = currentInputPosition;
+
+            }
+            else if (delta.HasValue)
+            {
+
+                delta = Vector3.Lerp(delta.Value, Vector3.zero, _rotationGravity * Time.deltaTime);
+
+                gameObject.transform.RotateWithDelta(delta.Value,
+                    _rotateSpeed,
+                    mainCameraTransform, _rotationAxis);
+
+                if (!(delta.Value.magnitude < 0.01f))
+                {
+                    return;
+                }
+
+                delta = null;
+
+                RotationEnded?.Invoke();
 
             }
 

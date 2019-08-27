@@ -40,37 +40,37 @@ namespace CandyCoded.CommonComponents
         private void HandleLog(string logString, string stackTrace, LogType type)
         {
 
-            if (url != null && failedConnections < maxFailedConnections)
+            if (url == null || failedConnections >= maxFailedConnections)
             {
-
-                var loggingForm = new WWWForm();
-
-                loggingForm.AddField("Type", type.ToString());
-                loggingForm.AddField("Message", logString);
-                loggingForm.AddField("Stack_Trace", stackTrace);
-                loggingForm.AddField("Device_Model", SystemInfo.deviceModel);
-
-                StartCoroutine(SendDataToLumberLog(loggingForm));
-
+                return;
             }
+
+            var loggingForm = new WWWForm();
+
+            loggingForm.AddField("Type", type.ToString());
+            loggingForm.AddField("Message", logString);
+            loggingForm.AddField("Stack_Trace", stackTrace);
+            loggingForm.AddField("Device_Model", SystemInfo.deviceModel);
+
+            StartCoroutine(SendData(loggingForm));
 
         }
 
-        private IEnumerator SendDataToLumberLog(WWWForm form)
+        private IEnumerator SendData(WWWForm form)
         {
-            using (UnityWebRequest www = UnityWebRequest.Post(url, form))
+            using (var www = UnityWebRequest.Post(url, form))
             {
 
                 yield return www.SendWebRequest();
 
-                if (www.isNetworkError || www.isHttpError)
+                if (!www.isNetworkError && !www.isHttpError)
                 {
-
-                    Debug.LogError(www.error);
-
-                    failedConnections += 1;
-
+                    yield break;
                 }
+
+                Debug.LogError(www.error);
+
+                failedConnections += 1;
 
             }
 

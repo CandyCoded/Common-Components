@@ -9,7 +9,9 @@ namespace CandyCoded.CommonComponents
     {
 
         [SerializeField]
-        private Transform mainCamera;
+        private Camera mainCamera;
+
+        private Transform mainCameraTransform;
 
 #pragma warning disable S1144
 
@@ -20,16 +22,18 @@ namespace CandyCoded.CommonComponents
             if (mainCamera == null)
             {
 
-                mainCamera = Camera.main.transform;
+                mainCamera = Camera.main;
 
             }
+
+            mainCameraTransform = mainCamera.transform;
 
         }
 
         private void Update()
         {
 
-            gameObject.transform.LookAt(gameObject.transform.position + mainCamera.rotation * Vector3.forward);
+            gameObject.transform.LookAt(gameObject.transform.position + mainCameraTransform.rotation * Vector3.forward);
 
         }
 #pragma warning restore S1144

@@ -13,7 +13,7 @@ namespace CandyCoded.CommonComponents
         private Camera mainCamera;
 
         [SerializeField]
-        private float _rotateSpeed = 10f;
+        private float _rotateSpeed = 100f;
 
 #pragma warning disable CS0649
         [SerializeField]

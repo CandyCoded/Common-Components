@@ -20,7 +20,7 @@ namespace CandyCoded.CommonComponents
 
 #pragma warning disable CS0649
         [SerializeField]
-        private ROTATION_AXIS _rotationAxis;
+        private RotationAxis _rotationAxis;
 
         [SerializeField]
         private UnityEvent RotationStarted;
@@ -85,7 +85,7 @@ namespace CandyCoded.CommonComponents
                 delta = mainCamera.ScreenToHighPrecisionViewportPoint(inputPreviousPosition.Value) -
                         mainCamera.ScreenToHighPrecisionViewportPoint(currentInputPosition.Value);
 
-                gameObject.transform.RotateWithDelta(delta.Value,
+                gameObject.transform.RotateWithInputDelta(delta.Value,
                     _rotateSpeed,
                     mainCameraTransform, _rotationAxis);
 
@@ -97,7 +97,7 @@ namespace CandyCoded.CommonComponents
 
                 delta = Vector3.Lerp(delta.Value, Vector3.zero, _rotationGravity * Time.deltaTime);
 
-                gameObject.transform.RotateWithDelta(delta.Value,
+                gameObject.transform.RotateWithInputDelta(delta.Value,
                     _rotateSpeed,
                     mainCameraTransform, _rotationAxis);
 

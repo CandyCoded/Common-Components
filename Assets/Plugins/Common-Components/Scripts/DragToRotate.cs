@@ -6,6 +6,7 @@ using UnityEngine.Events;
 namespace CandyCoded.CommonComponents
 {
 
+    [AddComponentMenu("CandyCoded/Drag To Rotate")]
     public class DragToRotate : MonoBehaviour
     {
 

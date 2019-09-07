@@ -1,19 +1,19 @@
 {
-  "name": "xyz.candycoded.common-components",
-  "displayName": "Common-Components",
-  "version": "1.0.0",
-  "unity": "2019.2",
-  "description": "Common components for use with CandyCoded",
-  "keywords": [
-      "components"
-  ],
   "dependencies": {
     "xyz.candycoded.candycoded": "3.0.0",
+    "com.unity.ide.rider": "1.1.0",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.particlesystem": "1.0.0",
     "com.unity.modules.ui": "1.0.0",
     "com.unity.modules.uielements": "1.0.0",
     "com.unity.modules.unitywebrequest": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "candycoded",
+      "url": "https://registry.npmjs.com",
+      "scopes": ["xyz.candycoded"]
+    }
+  ]
 }

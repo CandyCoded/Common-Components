@@ -56,11 +56,11 @@ namespace CandyCoded.CommonComponents
         protected override void OnRelease()
         {
 
-            _coroutine = StartCoroutine(ContinueRotatingWithGravity());
+            _coroutine = StartCoroutine(ContinueWithGravity());
 
         }
 
-        private IEnumerator ContinueRotatingWithGravity()
+        private IEnumerator ContinueWithGravity()
         {
 
             while (!(_delta.magnitude < 0.01f) && !(_velocity.magnitude < 0.01f))

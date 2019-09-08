@@ -26,7 +26,7 @@ namespace CandyCoded.CommonComponents
         internal Transform _dragTransform;
 #pragma warning restore CS0649
 
-        private Vector3 _hitPosition;
+        private float _hitDistance;
 
         private Vector3 _hitOffset;
 
@@ -71,17 +71,17 @@ namespace CandyCoded.CommonComponents
                 return;
             }
 
-            _hitPosition = hit.collider.transform.position;
+            _hitDistance = hit.distance;
 
             _lastInputPosition = GetInputPosition();
 
-            if (_lastInputPosition.HasValue)
+            if (_lastInputPosition.HasValue && _dragTransform)
             {
 
-                _hitOffset = _hitPosition - _mainCamera.ScreenToWorldPoint(new Vector3(
+                _hitOffset = _dragTransform.position - _mainCamera.ScreenToWorldPoint(new Vector3(
                                  _lastInputPosition.Value.x,
                                  _lastInputPosition.Value.y,
-                                 _hitPosition.z));
+                                 _hitDistance));
 
             }
 
@@ -104,14 +104,14 @@ namespace CandyCoded.CommonComponents
 
             }
 
-            if (currentInputPosition.HasValue)
+            if (currentInputPosition.HasValue && _dragTransform)
             {
 
                 _newPosition =
                     _mainCamera.ScreenToWorldPoint(new Vector3(
                         currentInputPosition.Value.x,
                         currentInputPosition.Value.y,
-                        _hitPosition.z)) + _hitOffset;
+                        _hitDistance)) + _hitOffset;
 
             }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CandyCoded.CommonComponents
 {
 
-    public abstract class DragMonoBehaviour : MonoBehaviour
+    public abstract class DragMonoBehaviour<T> : MonoBehaviour
     {
 
         private const float DAMPEN_INPUT_POSITION_SPEED = 0.01f;
@@ -70,7 +70,14 @@ namespace CandyCoded.CommonComponents
         private void StateNone()
         {
 
-            if (!gameObject.GetInputDown(_mainCamera, out _currentFingerId, out RaycastHit hit))
+            if (typeof(T) == typeof(Rigidbody) &&
+                !gameObject.GetInputDown(_mainCamera, out _currentFingerId, out RaycastHit _))
+            {
+                return;
+            }
+
+            if (typeof(T) == typeof(Rigidbody2D) &&
+                !gameObject.GetInputDown(_mainCamera, out _currentFingerId, out RaycastHit2D _))
             {
                 return;
             }

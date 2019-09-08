@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CandyCoded.CommonComponents
 {
 
-    public class DragToRotate : DragMonoBehaviour
+    public class DragToRotate : DragMonoBehaviour<Rigidbody>
     {
 
         [SerializeField]

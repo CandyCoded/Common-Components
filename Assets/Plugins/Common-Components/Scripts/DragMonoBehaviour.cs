@@ -70,13 +70,13 @@ namespace CandyCoded.CommonComponents
         private void StateNone()
         {
 
-            if (typeof(T) == typeof(Rigidbody) &&
+            if (typeof(T) == typeof(Collider) &&
                 !gameObject.GetInputDown(_mainCamera, out _currentFingerId, out RaycastHit _))
             {
                 return;
             }
 
-            if (typeof(T) == typeof(Rigidbody2D) &&
+            if (typeof(T) == typeof(Collider2D) &&
                 !gameObject.GetInputDown(_mainCamera, out _currentFingerId, out RaycastHit2D _))
             {
                 return;

@@ -69,11 +69,6 @@ namespace CandyCoded.CommonComponents
                     _rotateSpeed,
                     _mainCamera.transform, _rotationAxis);
 
-                if (_dragTransform)
-                {
-                    _dragTransform.position += _delta / 10;
-                }
-
                 yield return null;
 
             }

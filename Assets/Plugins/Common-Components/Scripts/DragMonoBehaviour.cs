@@ -141,20 +141,11 @@ namespace CandyCoded.CommonComponents
                 return;
             }
 
-            if (currentInputPosition.HasValue && _dampenedInputPosition.HasValue)
+            if (_lastInputPosition.HasValue && _dampenedInputPosition.HasValue)
             {
 
-                var lastInputPositionWorld = _mainCamera.ScreenToWorldPoint(new Vector3(
-                    currentInputPosition.Value.x,
-                    currentInputPosition.Value.y,
-                    _dragTransform.position.z));
-
-                var dampenedInputPositionWorld = _mainCamera.ScreenToWorldPoint(new Vector3(
-                    _dampenedInputPosition.Value.x,
-                    _dampenedInputPosition.Value.y,
-                    _dragTransform.position.z));
-
-                _velocity = lastInputPositionWorld - dampenedInputPositionWorld;
+                _velocity = _mainCamera.ScreenToViewportPoint(_lastInputPosition.Value) -
+                            _mainCamera.ScreenToViewportPoint(_dampenedInputPosition.Value);
 
             }
 

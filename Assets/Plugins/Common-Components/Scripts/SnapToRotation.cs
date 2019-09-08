@@ -14,12 +14,12 @@ namespace CandyCoded.CommonComponents
         [SerializeField]
         private float _secondsToSnapToAngle = 0.25f;
 
-        public void SnapToRotationHandler()
+        public Coroutine SnapToRotationHandler()
         {
 
             Animate.Stop(gameObject, "RotateTo");
 
-            Animate.RotateTo(gameObject, gameObject.transform.rotation.SnapRotation(_rotationSnapToAngle),
+            return Animate.RotateTo(gameObject, gameObject.transform.rotation.SnapRotation(_rotationSnapToAngle),
                 _secondsToSnapToAngle);
 
         }

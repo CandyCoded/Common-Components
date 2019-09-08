@@ -69,13 +69,16 @@ namespace CandyCoded.CommonComponents
                     _rotateSpeed,
                     _mainCamera.transform, _rotationAxis);
 
-                gameObject.transform.position += _delta / 10;
+                if (_dragTransform)
+                {
+                    _dragTransform.position += _delta / 10;
+                }
 
                 yield return null;
 
             }
 
-            _snapToRotation.SnapToRotationHandler();
+            yield return _snapToRotation.SnapToRotationHandler();
 
         }
 

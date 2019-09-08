@@ -28,8 +28,6 @@ namespace CandyCoded.CommonComponents
         internal Transform _dragTransform;
 #pragma warning restore CS0649
 
-        private float _hitDistance;
-
         private Vector3 _hitOffset;
 
         internal int _currentFingerId;
@@ -51,7 +49,6 @@ namespace CandyCoded.CommonComponents
 
             switch (_currentState)
             {
-
                 case DragState.None:
                     StateNone();
 
@@ -82,9 +79,11 @@ namespace CandyCoded.CommonComponents
 
             _dampenedInputPosition = _lastInputPosition;
 
-            _hitDistance = hit.distance;
-
-            _hitOffset = gameObject.transform.position - hit.point;
+            _hitOffset = _dragTransform.position - _mainCamera.ScreenToWorldPoint(
+                             new Vector3(
+                                 _lastInputPosition.Value.x,
+                                 _lastInputPosition.Value.y,
+                                 _dragTransform.position.z));
 
             _currentState = DragState.Dragging;
 
@@ -101,7 +100,7 @@ namespace CandyCoded.CommonComponents
             {
 
                 _delta = _mainCamera.ScreenToHighPrecisionViewportPoint(_lastInputPosition.Value) -
-                        _mainCamera.ScreenToHighPrecisionViewportPoint(currentInputPosition.Value);
+                         _mainCamera.ScreenToHighPrecisionViewportPoint(currentInputPosition.Value);
 
             }
 
@@ -109,14 +108,19 @@ namespace CandyCoded.CommonComponents
             {
 
                 _newPosition =
-                    _mainCamera.ScreenPointToRay(currentInputPosition.Value).GetPoint(_hitDistance) + _hitOffset;
+                    _mainCamera.ScreenToWorldPoint(new Vector3(
+                        currentInputPosition.Value.x,
+                        currentInputPosition.Value.y,
+                        _dragTransform.position.z)) + _hitOffset;
 
             }
 
             if (_dampenedInputPosition.HasValue)
             {
 
-                _dampenedInputPosition = Vector3.Lerp(_dampenedInputPosition.Value, currentInputPosition.Value,
+                _dampenedInputPosition = Vector3.Lerp(
+                    _dampenedInputPosition.Value,
+                    currentInputPosition.Value,
                     DAMPEN_INPUT_POSITION_SPEED);
 
             }
@@ -140,11 +144,15 @@ namespace CandyCoded.CommonComponents
             if (currentInputPosition.HasValue && _dampenedInputPosition.HasValue)
             {
 
-                var lastInputPositionWorld = _mainCamera.ScreenToWorldPoint(new Vector3(currentInputPosition.Value.x,
-                    currentInputPosition.Value.y, _mainCamera.nearClipPlane));
+                var lastInputPositionWorld = _mainCamera.ScreenToWorldPoint(new Vector3(
+                    currentInputPosition.Value.x,
+                    currentInputPosition.Value.y,
+                    _dragTransform.position.z));
 
-                var dampenedInputPositionWorld = _mainCamera.ScreenToWorldPoint(new Vector3(_dampenedInputPosition.Value.x,
-                    _dampenedInputPosition.Value.y, _mainCamera.nearClipPlane));
+                var dampenedInputPositionWorld = _mainCamera.ScreenToWorldPoint(new Vector3(
+                    _dampenedInputPosition.Value.x,
+                    _dampenedInputPosition.Value.y,
+                    _dragTransform.position.z));
 
                 _velocity = lastInputPositionWorld - dampenedInputPositionWorld;
 

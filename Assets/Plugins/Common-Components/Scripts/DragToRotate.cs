@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CandyCoded.CommonComponents
 {
 
-    public class DragToRotate : DragMonoBehaviour<Collider>
+    public class DragToRotate : DragMonoBehaviour
     {
 
         [SerializeField]
@@ -14,9 +14,6 @@ namespace CandyCoded.CommonComponents
 
         [SerializeField]
         private float _rotationGravity = 5f;
-
-        [SerializeField]
-        private float _movementGravity = 5f;
 
 #pragma warning disable CS0649
         [SerializeField]
@@ -63,18 +60,16 @@ namespace CandyCoded.CommonComponents
         private IEnumerator ContinueWithGravity()
         {
 
-            while (!(_delta.magnitude < 0.01f) && !(_velocity.magnitude < 0.01f))
+            while (!(_delta.magnitude < 0.01f))
             {
 
                 _delta = Vector3.Lerp(_delta, Vector3.zero, _rotationGravity * Time.deltaTime);
-
-                _velocity = Vector3.Lerp(_velocity, Vector3.zero, _movementGravity * Time.deltaTime);
 
                 gameObject.transform.RotateWithInputDelta(_delta,
                     _rotateSpeed,
                     _mainCamera.transform, _rotationAxis);
 
-                gameObject.transform.position += _velocity;
+                gameObject.transform.position += _delta / 10;
 
                 yield return null;
 

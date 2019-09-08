@@ -6,10 +6,8 @@ using UnityEngine;
 namespace CandyCoded.CommonComponents
 {
 
-    public abstract class DragMonoBehaviour<T> : MonoBehaviour
+    public abstract class DragMonoBehaviour : MonoBehaviour
     {
-
-        private const float DAMPEN_INPUT_POSITION_SPEED = 0.01f;
 
         internal enum DragState
         {
@@ -28,21 +26,19 @@ namespace CandyCoded.CommonComponents
         internal Transform _dragTransform;
 #pragma warning restore CS0649
 
+        private Vector3 _hitPosition;
+
         private Vector3 _hitOffset;
 
         internal int _currentFingerId;
 
         internal Vector3? _lastInputPosition;
 
-        private Vector3? _dampenedInputPosition;
-
         internal DragState _currentState = DragState.None;
 
         internal Vector3 _newPosition;
 
         internal Vector3 _delta;
-
-        internal Vector3 _velocity;
 
         private void Update()
         {
@@ -70,27 +66,24 @@ namespace CandyCoded.CommonComponents
         private void StateNone()
         {
 
-            if (typeof(T) == typeof(Collider) &&
-                !gameObject.GetInputDown(_mainCamera, out _currentFingerId, out RaycastHit _))
+            if (!gameObject.GetInputDown(_mainCamera, out _currentFingerId, out RaycastHit hit))
             {
                 return;
             }
 
-            if (typeof(T) == typeof(Collider2D) &&
-                !gameObject.GetInputDown(_mainCamera, out _currentFingerId, out RaycastHit2D _))
-            {
-                return;
-            }
+            _hitPosition = hit.collider.transform.position;
 
             _lastInputPosition = GetInputPosition();
 
-            _dampenedInputPosition = _lastInputPosition;
+            if (_lastInputPosition.HasValue)
+            {
 
-            _hitOffset = _dragTransform.position - _mainCamera.ScreenToWorldPoint(
-                             new Vector3(
+                _hitOffset = _hitPosition - _mainCamera.ScreenToWorldPoint(new Vector3(
                                  _lastInputPosition.Value.x,
                                  _lastInputPosition.Value.y,
-                                 _dragTransform.position.z));
+                                 _hitPosition.z));
+
+            }
 
             _currentState = DragState.Dragging;
 
@@ -106,8 +99,8 @@ namespace CandyCoded.CommonComponents
             if (currentInputPosition.HasValue && _lastInputPosition.HasValue)
             {
 
-                _delta = _mainCamera.ScreenToHighPrecisionViewportPoint(_lastInputPosition.Value) -
-                         _mainCamera.ScreenToHighPrecisionViewportPoint(currentInputPosition.Value);
+                _delta = _mainCamera.ScreenToHighPrecisionViewportPoint(currentInputPosition.Value) -
+                         _mainCamera.ScreenToHighPrecisionViewportPoint(_lastInputPosition.Value);
 
             }
 
@@ -118,17 +111,7 @@ namespace CandyCoded.CommonComponents
                     _mainCamera.ScreenToWorldPoint(new Vector3(
                         currentInputPosition.Value.x,
                         currentInputPosition.Value.y,
-                        _dragTransform.position.z)) + _hitOffset;
-
-            }
-
-            if (_dampenedInputPosition.HasValue)
-            {
-
-                _dampenedInputPosition = Vector3.Lerp(
-                    _dampenedInputPosition.Value,
-                    currentInputPosition.Value,
-                    DAMPEN_INPUT_POSITION_SPEED);
+                        _hitPosition.z)) + _hitOffset;
 
             }
 
@@ -146,14 +129,6 @@ namespace CandyCoded.CommonComponents
             if (!InputManager.GetInputUp(_currentFingerId))
             {
                 return;
-            }
-
-            if (_lastInputPosition.HasValue && _dampenedInputPosition.HasValue)
-            {
-
-                _velocity = _mainCamera.ScreenToViewportPoint(_lastInputPosition.Value) -
-                            _mainCamera.ScreenToViewportPoint(_dampenedInputPosition.Value);
-
             }
 
             _currentState = DragState.None;

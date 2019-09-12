@@ -40,6 +40,18 @@ namespace CandyCoded.CommonComponents
 
         internal Vector3 _delta;
 
+        private void Awake()
+        {
+
+            if (_mainCamera == null)
+            {
+
+                _mainCamera = Camera.main;
+
+            }
+
+        }
+
         private void Update()
         {
 

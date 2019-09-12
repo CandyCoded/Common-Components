@@ -73,7 +73,12 @@ namespace CandyCoded.CommonComponents
 
             }
 
-            yield return _snapToRotation.SnapToRotationHandler();
+            if (_snapToRotation)
+            {
+
+                yield return _snapToRotation.SnapToRotationHandler();
+
+            }
 
         }
 

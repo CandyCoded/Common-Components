@@ -12,6 +12,13 @@ namespace CandyCoded.CommonComponents
 
         private RectTransform _wrapperTransform;
 
+        private void Start()
+        {
+
+            SetSafeArea();
+
+        }
+
         private void SetSafeArea()
         {
 
